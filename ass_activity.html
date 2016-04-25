@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>活动使用手册</title>
+<link rel="stylesheet" href="css/main.min.css" />
+<script type="text/javascript" src="js/all.min.js"></script>
+<meta name="viewport" content="width=836, user-scalable=no, target-densitydpi=device-dpi">
+</head>
+<body>
+	<div class="phone-wrap">
+		<img src="img/phone.png" class="phone" alt="" />
+		<img src="img/a1.png" class="content first" alt="" />
+		<img src="img/a2.png" class="content" alt="" />
+		<img src="img/a3.png" class="content" alt="" />
+		<img src="img/a4.png" class="content" alt="" />
+		<img src="img/a5.png" class="content" alt="" />
+		<div class="ass"></div>
+		<div class="circle" id="el"></div>
+		<img src="img/handPoint.png" class="hand" id="eh" alt="" />
+	</div>
+	
+	<div class="bottom">
+		活动宣传一呼百应，宣传推广不再是难题
+	</div>
+	
+	<div id="loading">
+	    <div>
+	      <img src="img/loading.png" alt="">
+	      <span>0</span>
+	    </div>
+ 	</div>
+	
+	<div class="fixed">
+		<img src="img/dome_finsh.png" class="fixedimg" alt="" />
+		<div class="restart" id="re">重新学习</div>
+	</div>
+</body>
+<script type="text/javascript" charset="utf-8">
+	$(function(){
+		var circle = [{left:'48.5%',top:'191.5%'},{left:'48.5%',top:'191.5%'},{left:'47.5%',top:'109.5%'},{left:'63%',top:'71%'},{top:'71%',left:'61.5%'}];
+		var hand = [{top:'198%',left:'50%'},{top:'198%',left:'50%'},{top:'115%',left:'51%'},{left:'66%',top:'79%'},{left:'63%',top:'78%'}];
+		var ass = [{left:'21%',top:'171%',txt:'上传活动内容'},{left:'21%',top:'165%',txt:'点击发布活动'},{left:'21%',top:'151%',txt:'发布或者预览'},{left:'21%',top:'43%',txt:'发布成功'},{left:'19%',top:'109%',txt:'发布成功，管理活动'}];
+		var i = 0,bol = true;
+		var el = document.getElementById('el');
+		var eh = document.getElementById('eh');
+		var re = document.getElementById('re');
+		var stop = 4;
+		el.addEventListener('touchstart',run,true);
+		eh.addEventListener('touchstart',run,true);
+		function run(e){
+			e.preventDefault();
+
+			if(e.touches.length==1&&i<stop&&bol===true){
+				i++;
+				bol = false;
+				$('.fixed').css('z-index','-9');
+				$('.content').eq(parseInt(i)).css('z-index','5').siblings('.content').css('z-index','-9');
+				circlefn($('.circle'),$('.hand'),i);
+				setTimeout(function(){
+					bol = true;
+				},555)
+			}else if(i>=stop){
+				$('.fixed').css('z-index','9999');
+				i = -1;
+				re.addEventListener('touchstart',run,true);
+			}
+
+		}
+
+		function circlefn(obj1,obj2,n){
+			obj1.css({
+				left:circle[n].left,
+				top:circle[n].top
+			});
+			obj2.css({
+				left:hand[n].left,
+				top:hand[n].top
+			});
+			$('.ass').removeClass('animated zoomIn').html(ass[n].txt).css({
+				left:ass[n].left,
+				top:ass[n].top,
+				opacity:'0'
+			});
+			$('.circle,.hand').addClass("animated fadeIn");
+			setTimeout(function(){
+				$('.ass').css('opacity','0.9').addClass("animated zoomIn");
+				$('.circle,.hand').removeClass("animated fadeIn");
+			},55);
+		}
+
+		circlefn($('.circle'),$('.hand'),i);
+
+	});
+</script>
+</html>
